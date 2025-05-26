@@ -31,9 +31,7 @@ export function Signin(){
         }
     }
 
-    return<div className='h-screen w-screen bg-gray-200 flex justify-center items-center '>
-        <div className='text-2xl pb-4 text-purple-800'>
-            
+    return<div className='h-screen w-screen bg-gray-200 flex justify-center items-center '>    
         <div className='bg-white rounded-2xl border-gray-200 border min-w-48 p-8'>
             <Input reference={usernameRef} placeholder='Username'/>
             <Input reference={passwordRef} placeholder='Username'/>
@@ -46,6 +44,5 @@ export function Signin(){
                 <Button onClick={signin} loading={false} text="Signin" variant='primary' size="md"  fullWidth={true}/>
                 </div>
         </div>
-    </div>
     </div>
 }
