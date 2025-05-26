@@ -26,16 +26,16 @@ Simple, secure, and social.
 - React Router  
 
 **Backend**  
-- Node.js / Express.js  
-- MongoDB *(or PostgreSQL)*  
+- Node.js (Express.js) 
+- MongoDB 
 
-**Authentication**  
-- JWT *(or OAuth - Google/Twitter)*
+<!-- **Authentication**  
+- JWT *(or OAuth - Google/Twitter)* -->
 
 ---
 
 ## 🌐 Live Demo  
-🔗 [dropithere.example.com](https://dropithere.example.com)
+🔗 [DropItHere.com](https://dropithere.nishul.dev)
 
 ---
 
