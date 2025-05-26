@@ -12,33 +12,35 @@ export function SignUp(){
     const [error, setError] = useState<string>("");
     const navigate = useNavigate();
    
-    try{
     async function signup() {
-        const username = usernameRef.current?.value;
-        const password = passwordRef.current?.value;
-        await axios.post(BACKRND_URL + "/api/v1/signup", {
-                username,
-                password 
-        })
-        alert("you have signed up")
-        navigate("/signin")
-        
-    }} catch (error) {
-        setError("User already exists");
+    try {
+      const username = usernameRef.current?.value;
+      const password = passwordRef.current?.value;
+      await axios.post(BACKRND_URL + "/api/v1/signup", {
+        username,
+        password,
+      });
+      alert("You have signed up");
+      navigate("/signin");
+    } catch (error) {
+      setError("User already exists");
     }
+  }
 
-    async function navigateSignup() {
-        navigate("/signin")
-    }
+  function navigateSignup() {
+    navigate("/signin");
+  }
 
     return<div className='h-screen w-screen bg-gray-200 flex justify-center items-center '>
         <div className='bg-white rounded-2xl border-gray-200 border min-w-48 p-8'>
             <Input reference={usernameRef} placeholder='Username'/>
             <Input reference={passwordRef} placeholder='Password'/>
 
-            {error && <div>
-                <p className='text-red-500 text-sm pl-2'>{error}</p>
-            </div>}
+             {error && (
+          <div>
+            <p className="text-red-500 text-sm pl-2">{error}</p>
+          </div>
+        )}
 
             <div className='justify-center pt-4'>
                 <div className=''>
