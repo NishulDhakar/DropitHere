@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { Input } from '../component/Input';
 import { Button } from '../component/Button';
 import { BACKRND_URL } from '../config';
@@ -9,8 +9,10 @@ export function SignUp(){
 
     const usernameRef = useRef<HTMLInputElement>(null);
     const passwordRef = useRef<HTMLInputElement>(null);
+    const [error, setError] = useState<string>("");
     const navigate = useNavigate();
-
+   
+    try{
     async function signup() {
         const username = usernameRef.current?.value;
         const password = passwordRef.current?.value;
@@ -21,6 +23,8 @@ export function SignUp(){
         alert("you have signed up")
         navigate("/signin")
         
+    }} catch (error) {
+        setError("User already exists");
     }
 
     async function navigateSignup() {
@@ -31,6 +35,10 @@ export function SignUp(){
         <div className='bg-white rounded-2xl border-gray-200 border min-w-48 p-8'>
             <Input reference={usernameRef} placeholder='Username'/>
             <Input reference={passwordRef} placeholder='Password'/>
+
+            {error && <div>
+                <p className='text-red-500 text-sm pl-2'>{error}</p>
+            </div>}
 
             <div className='justify-center pt-4'>
                 <div className=''>
