@@ -1,5 +1,12 @@
+[phases.setup]
+packages = ["nodejs"]
+
 [phases.build]
-cmds = ["cd server && npm install && npm run build"]
+cmds = [
+  "cd server",
+  "npm install",
+  "npm run build"
+]
 
 [start]
 cmd = "cd server && npm run start"
