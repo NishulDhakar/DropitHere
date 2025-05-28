@@ -22,7 +22,7 @@ export function Dashboard() {
 
   return (
     
-    <div className='p-4 ml-72 min-h-screen border-2 border-gray-200 bg-[#eeeeef]'>
+    <div className='p-4 md:ml-72 min-h-screen border-2 border-gray-200 bg-[#eeeeef]'>
       <div>
        <SideBar />
       </div>

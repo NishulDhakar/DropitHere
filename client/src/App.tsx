@@ -11,12 +11,10 @@ function App() {
   return (
     <BrowserRouter>
     <Routes>
-      {/* <Route path='/' element={<FirstPage />} /> */}
       <Route path='/signin' element={<Signin />} />
       <Route path='/' element={<SignUp />} />
       <Route path='/Dashboard' element={<Dashboard />} />
       <Route path='/share/:shareId' element={<SharedDashboard />} />
-
       </Routes>
     </BrowserRouter>
   )
