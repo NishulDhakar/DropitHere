@@ -61,17 +61,11 @@ Feel free to:
 
 ---
 
-## 🌠 Contact
+## 🤝 Connect with Me
 
-<p align="center">
-  <a href="https://twitter.com/YourTwitterHandle">
-    <img src="https://img.shields.io/badge/Twitter-1DA1F2?style=for-the-badge&logo=twitter&logoColor=white">
-  </a>
-  
-  <a href="https://www.linkedin.com/in/YourLinkedInProfile">
-    <img src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white">
-  </a>
-</p>
+[![🌐 Portfolio](https://img.shields.io/badge/🌐_Portfolio-36BCF7?style=for-the-badge&logoColor=white&labelColor=1F222E)](https://nishul.dev)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white&labelColor=1F222E)](https://linkedin.com/in/nishuldhakar)
+[![Twitter](https://img.shields.io/badge/X-000000?style=for-the-badge&logo=x&logoColor=white&labelColor=1F222E)](https://x.com/nishuldhakar)
 
 <p align="center">
   <img src="https://media.giphy.com/media/xUA7bdpLxQhsSQdyog/giphy.gif" width="200">
