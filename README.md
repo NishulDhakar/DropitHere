@@ -1,7 +1,5 @@
 # ⚡ DropItHere
 
-> Your personal content vault — store your favorite YouTube videos and Twitter posts, create shareable links, and keep everything organized and accessible.
-
 DropItHere lets you create an account, save YouTube videos and Twitter posts, and generate easy-to-share links for your content. Share your collections with friends, family, or anyone — no login required to view shared content.
 
 Simple, secure, and social.
