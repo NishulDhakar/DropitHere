@@ -1,7 +1,5 @@
 # ⚡ DropItHere
 
-> Your personal content vault — store your favorite YouTube videos and Twitter posts, create shareable links, and keep everything organized and accessible.
-
 DropItHere lets you create an account, save YouTube videos and Twitter posts, and generate easy-to-share links for your content. Share your collections with friends, family, or anyone — no login required to view shared content.
 
 Simple, secure, and social.
@@ -61,20 +59,8 @@ Feel free to:
 
 ---
 
-## 🌠 Contact
+## 🤝 Connect with Me
 
-<p align="center">
-  <a href="https://twitter.com/YourTwitterHandle">
-    <img src="https://img.shields.io/badge/Twitter-1DA1F2?style=for-the-badge&logo=twitter&logoColor=white">
-  </a>
-  
-  <a href="https://www.linkedin.com/in/YourLinkedInProfile">
-    <img src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white">
-  </a>
-</p>
-
-<p align="center">
-  <img src="https://media.giphy.com/media/xUA7bdpLxQhsSQdyog/giphy.gif" width="200">
-  <br>
-  <em>Effortless content sharing, one link at a time... 🚀💻✨</em>
-</p>
+[![🌐 Portfolio](https://img.shields.io/badge/🌐_Portfolio-36BCF7?style=for-the-badge&logoColor=white&labelColor=1F222E)](https://nishul.dev)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white&labelColor=1F222E)](https://linkedin.com/in/nishuldhakar)
+[![Twitter](https://img.shields.io/badge/X-000000?style=for-the-badge&logo=x&logoColor=white&labelColor=1F222E)](https://x.com/nishuldhakar)
