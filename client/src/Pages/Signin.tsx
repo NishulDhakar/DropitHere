@@ -33,8 +33,8 @@ export function Signin(){
 
     return<div className='h-screen w-screen bg-gray-200 flex justify-center items-center '>    
         <div className='bg-white rounded-2xl border-gray-200 border min-w-48 p-8'>
-            <Input reference={usernameRef} placeholder='Username'/>
-            <Input reference={passwordRef} placeholder='Username'/>
+            <Input reference={usernameRef} placeholder='Nishul' type='text'/>
+            <Input reference={passwordRef} placeholder='123456' type='password'/>
 
             {error && <div>
                 <p className='text-red-500 text-sm pl-2'>{error}</p>

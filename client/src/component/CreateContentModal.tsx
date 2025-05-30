@@ -50,7 +50,9 @@ export function CreateContentModal({open , onClose}){
                     </div>
 
                     <div>
-                        <h1 className="flex justify-center text-2xl p-4">Type</h1>
+                        <div className="flex justify-center text-xl font-semibold border-b pb-2 mb-2">
+                            <h1>Type</h1>
+                        </div>
                         <div className="flex gap-1 justify-center  pb-2">
                         <Button size="md" text= "Youtube" variant={type === contentType.Youtube ? "primary" : "secondary"} onClick={() => {
                             setType(contentType.Youtube)

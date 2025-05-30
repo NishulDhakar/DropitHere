@@ -100,17 +100,17 @@ app.get("/api/v1/content" , userMiddleware, async (req, res) => {
     })
 })
 
-app.delete("/api/v1/content" , async (req, res) => {
+app.delete("/api/v1/content", userMiddleware, async (req, res) => {
+    const link = req.body.link;
+    //@ts-ignore
+    const userId = req.userId;
 
-    const contentId = req.body.contentId
+    await contentModel.deleteOne({
+        link,
+        userId
+    });
 
-    await contentModel.deleteMany({
-        contentId,
-        //@ts-ignore
-        userId : req.userId
-
-    })
-
+    res.json({ message: "Content deleted" });
 })
 
 app.post("/api/v1/brain/share" ,userMiddleware, async(req, res) => {
@@ -195,4 +195,4 @@ app.get("/api/v1/brain/:shareLink" , async(req, res) => {
 
 app.listen(3001 , () => {
     console.log("Server is running on port 3001")
-}) 
+})

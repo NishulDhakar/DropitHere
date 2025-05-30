@@ -1,5 +1,7 @@
 import React from "react"
 import { ShareIcon } from "../icons/ShareIcon"
+import { DeleteIcon } from "../icons/Delete";
+import { TitleIcon } from "../icons/TitleIcon";
 
 
 interface CardProps {
@@ -12,11 +14,11 @@ export function Card({title, link , type} : CardProps) {
 
     return <div>
         <div className="text-black bg-white min-w-72 min-h-48 p-4 rounded-md border-gray-200 border">
-           <div className="flex justify-between">
+           <div className="flex justify-between pb-4">
 
             <div className="flex items-center text-md">
                 <div className="text-gray-500  pr-2">
-                <ShareIcon />
+                <TitleIcon />
                 </div>
                 {title}
             </div>
@@ -26,7 +28,7 @@ export function Card({title, link , type} : CardProps) {
                 <ShareIcon /></a>
                 </div>
                 <div className="text-gray-500">
-                <ShareIcon />
+                <DeleteIcon />
                 </div>
             </div>
 
