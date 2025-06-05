@@ -1,5 +1,5 @@
 import React from "react"
-import { ShareIcon } from "../icons/ShareIcon"
+// import { ShareIcon } from "../icons/ShareIcon"
 import { DeleteIcon } from "../icons/Delete";
 // import { TitleIcon } from "../icons/TitleIcon";
 import { TwitterIcon } from '../icons/twitter';
