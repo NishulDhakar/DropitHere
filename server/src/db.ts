@@ -2,7 +2,7 @@ import mongoose, {Schema , model} from "mongoose"
 import 'dotenv/config';
 
 if (!process.env.MONGO_URL) {
-    throw new Error('MONGO_URL environment variable is required');
+    throw new Error('MONGO_URL');
 }
 
 mongoose.connect(process.env.MONGO_URL)

@@ -14,11 +14,40 @@ export function Dashboard() {
   const [copied, setCopied] = useState(false);
 
   const [modalOpen , setModalOpen] = useState(false)
-  const {contents , refress} = useContent()
+  const { contents, refress } = useContent()
   
   useEffect(() => {
     refress();
   }, [modalOpen])
+
+  const handleDelete = async (link: string) => {
+    try {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        alert("Please sign in to delete content");
+        return;
+      }
+      
+      const res = await fetch(`${BACKRND_URL}/api/v1/content`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": token,
+        },
+        body: JSON.stringify({ link }),
+      });
+
+      if (!res.ok) {
+        const data = await res.json();
+        throw new Error(data.message || "Failed to delete content");
+      }
+
+      await refress(); 
+    } catch (error) {
+      console.error("Error deleting content:", error);
+      alert(error instanceof Error ? error.message : "Failed to delete content");
+    }
+  };
 
   return (
     
@@ -45,7 +74,7 @@ export function Dashboard() {
                     }
             });
 
-            const shareUrl = "http://localhost:5173/share/" + response.data.hash;
+            const shareUrl = "dropithere.nishul.dev/share/" + response.data.hash;
             await navigator.clipboard.writeText(shareUrl);
             setCopied(true)
             setTimeout(() => setCopied(false), 1000);
@@ -67,10 +96,15 @@ export function Dashboard() {
        
        <div className='flex gap-4 flex-wrap mt-8'>
 
-        {contents.map(({type, link , title}) => <Card
-         type= {type} 
-         link= {link}
-         title={title} />)}
+        {contents.map(({ type, link, title }, idx) => (
+          <Card
+            key={link + type + idx}
+            type={type}
+            link={link}
+            title={title}
+            onDelete={() => handleDelete(link)}
+          />
+        ))}
        </div>
        </div>
     </div>

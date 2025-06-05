@@ -12,25 +12,27 @@ enum contentType{
 }
 export function CreateContentModal({open , onClose}){
 
-    //@ts-ignore
-    const titleRef = useRef<HTMLInputElement>();
-    //@ts-ignore
-    const linkRef = useRef<HTMLInputElement>();
+    
+    const titleRef = useRef<HTMLInputElement>(null);
+
+    const linkRef = useRef<HTMLInputElement>(null);
     const[ type , setType] = useState(contentType.Youtube);
 
     async function addContent() {
+        if (!titleRef.current || !linkRef.current) return;
+
         const title = titleRef.current.value;
         const link = linkRef.current.value;
 
-        await axios.post(BACKRND_URL + "/api/v1/content" ,{
+        await axios.post(BACKRND_URL + "/api/v1/content", {
             link,
             type,
             title,
-        } , {
-            headers : {
-                "Authorization" : localStorage.getItem("token")
+        }, {
+            headers: {
+                "Authorization": localStorage.getItem("token")
             }
-        })
+        });
 
         onClose();
     }
