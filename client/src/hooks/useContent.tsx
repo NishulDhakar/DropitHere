@@ -22,7 +22,7 @@ export function useContent(){
 
     let interval =  setInterval(() => {
             refress()  
-        } , 10 * 1000)
+        } , 10 * 500)
 
         return () => {
             clearInterval(interval);

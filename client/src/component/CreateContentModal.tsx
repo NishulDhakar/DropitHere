@@ -46,13 +46,13 @@ export function CreateContentModal({open , onClose}){
                         <CrossIcon />
                         </div>
                     </div>
-                    <div >
-                        <Input reference={titleRef} placeholder="title"/>
-                        <Input reference={linkRef} placeholder="link" />
+                    <div>
+                        <Input reference={titleRef} placeholder="Title"/>
+                        <Input reference={linkRef}  placeholder= "Link — youtube / twitter" />
                     </div>
 
                     <div>
-                        <div className="flex justify-center text-xl font-semibold border-b pb-2 mb-2">
+                        <div className="flex justify-center text-lg font-semibold border-b pb-2 pt-2 mb-2">
                             <h1>Type</h1>
                         </div>
                         <div className="flex gap-1 justify-center  pb-2">

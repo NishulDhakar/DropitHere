@@ -23,7 +23,7 @@ const sizeStyles = {
     "md" : "p-4" ,
     "lg" : "p-6" 
 }
-const defaultStyles = "rounded-md front-light px-4 py-2 flex items-center"
+const defaultStyles = "rounded-md front-light px-4 py-2 flex items-center hover:opacity-90 transition-all duration-150 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#7164c0] border border-gray-200 shadow-sm";
 
 export const Button = (props : ButtonProps) => {
     return <button

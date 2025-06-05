@@ -10,10 +10,9 @@ import axios from 'axios';
 import { BACKRND_URL } from '../config';
 
 export function Dashboard() {
-
   const [copied, setCopied] = useState(false);
-
   const [modalOpen , setModalOpen] = useState(false)
+  const [filterType, setFilterType] = useState<"all" | "twitter" | "youtube">("all");
   const { contents, refress } = useContent()
   
   useEffect(() => {
@@ -49,64 +48,66 @@ export function Dashboard() {
     }
   };
 
+  // Filter contents based on filterType
+  const filteredContents = filterType === "all"
+    ? contents
+    : contents.filter(item => item.type === filterType);
+
   return (
-    
     <div className='p-4 ml-72 min-h-screen border-2 border-gray-200 bg-[#eeeeef]'>
       <div>
-       <SideBar />
+        <SideBar setFilterType={setFilterType} />
       </div>
       <div className='p-4'>
-      <CreateContentModal open={modalOpen} onClose={() =>{
-         setModalOpen(false)
-      }} />
+        <CreateContentModal open={modalOpen} onClose={() => setModalOpen(false)} />
 
 
-      <div className='flex justify-end gap-4'>
+        <div className='flex justify-end gap-4'>
 
 
-          <Button 
-              onClick={ async () => {
-        const response = await axios.post(BACKRND_URL + "/api/v1/brain/share/" , {
-                    share : true
-                } , { 
-                    headers : {
-                    "Authorization" : localStorage.getItem("token")
-                    }
-            });
+            <Button 
+                onClick={ async () => {
+      const response = await axios.post(BACKRND_URL + "/api/v1/brain/share/" , {
+                  share : true
+              } , { 
+                  headers : {
+                  "Authorization" : localStorage.getItem("token")
+                  }
+          });
 
-            const shareUrl = "dropithere.nishul.dev/share/" + response.data.hash;
-            await navigator.clipboard.writeText(shareUrl);
-            setCopied(true)
-            setTimeout(() => setCopied(false), 1000);
-            }}
-               startIcon={ <ShareIcon /> } 
-               size ="md" 
-               variant='secondary' 
-               text = {copied ? ("Copied to clipboard") : "Share Brain"}/>
+          const shareUrl = "dropithere.nishul.dev/share/" + response.data.hash;
+          await navigator.clipboard.writeText(shareUrl);
+          setCopied(true)
+          setTimeout(() => setCopied(false), 1000);
+          }}
+                 startIcon={ <ShareIcon /> } 
+                 size ="md" 
+                 variant='secondary' 
+                 text = {copied ? ("Copied to clipboard") : "Share Brain"}/>
 
-           <Button 
-               onClick={() =>{
-                setModalOpen(true)
-               }}
-               startIcon={<PlusIcon size='lg'/>} 
-               size ="sm"  
-               variant='primary' 
-               text = "Add Comment"/>
-       </div>
-       
-       <div className='flex gap-4 flex-wrap mt-8'>
+             <Button 
+                 onClick={() =>{
+                  setModalOpen(true)
+                 }}
+                 startIcon={<PlusIcon size='lg'/>} 
+                 size ="sm"  
+                 variant='primary' 
+                 text = "Add Comment"/>
+         </div>
+         
+         <div className='flex gap-4 flex-wrap mt-8'>
 
-        {contents.map(({ type, link, title }, idx) => (
-          <Card
-            key={link + type + idx}
-            type={type}
-            link={link}
-            title={title}
-            onDelete={() => handleDelete(link)}
-          />
-        ))}
-       </div>
-       </div>
-    </div>
+          {filteredContents.map(({ type, link, title }, idx) => (
+            <Card
+              key={link + type + idx}
+              type={type}
+              link={link}
+              title={title}
+              onDelete={() => handleDelete(link)}
+            />
+          ))}
+         </div>
+         </div>
+      </div>
   )
 }
