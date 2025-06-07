@@ -31,25 +31,42 @@ export function SignUp(){
     navigate("/signin");
   }
 
-    return<div className='h-screen w-screen bg-gray-200 flex justify-center items-center '>
-        <div className='bg-white rounded-2xl border-gray-200 border min-w-48 p-8'>
-            <Input reference={usernameRef} placeholder='Nishul' type='text'/>
-            <Input reference={passwordRef} placeholder='123456' type='password'/>
+    return (
+  <div className="min-h-screen w-screen bg-gradient-to-br from-gray-100 to-gray-300 flex justify-center items-center px-4">
+    <div className="bg-white dark:bg-zinc-900 rounded-2xl shadow-lg max-w-md w-full p-8 border border-gray-200 dark:border-zinc-700 space-y-6">
+      
+      <h2 className="text-2xl font-bold text-center text-gray-800 dark:text-white">
+        Create Your Account
+      </h2>
 
-             {error && (
-          <div>
-            <p className="text-red-500 text-sm pl-2">{error}</p>
-          </div>
-        )}
+      <div className="space-y-4">
+        <Input reference={usernameRef} placeholder="Username" type="text" />
+        <Input reference={passwordRef} placeholder="Password" type="password" />
+      </div>
 
-            <div className='justify-center pt-4'>
-                <div className=''>
-                <Button onClick={signup} loading={false} text="Signup" variant='primary' size="md"  fullWidth={true}/>
-                </div>
-                <div className='pt-4'>
-                <Button onClick={navigateSignup} loading={false} text="Already Have Account" variant='secondary' size="md"  fullWidth={true}/>
-                </div>
-                </div>
-        </div>
+      {error && (
+        <p className="text-red-500 text-sm pl-1">{error}</p>
+      )}
+
+      <div className="space-y-4 pt-4">
+        <Button
+          onClick={signup}
+          loading={false}
+          text="Signup"
+          variant="primary"
+          size="md"
+          fullWidth={true}
+        />
+        <Button
+          onClick={navigateSignup}
+          loading={false}
+          text="Already Have Account"
+          variant="secondary"
+          size="md"
+          fullWidth={true}
+        />
+      </div>
     </div>
+  </div>
+);
 }

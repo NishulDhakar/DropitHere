@@ -30,19 +30,35 @@ export function Signin(){
             setError("Incorrect username or password");
         }
     }
+return (
+  <div className="min-h-screen w-screen bg-gradient-to-br from-gray-100 to-gray-300 flex justify-center items-center px-4">
+    <div className="bg-white dark:bg-zinc-900 rounded-2xl shadow-xl w-full max-w-sm p-8 space-y-6 border border-gray-200">
+      
+      <h2 className="text-2xl font-bold text-center text-gray-800 dark:text-white">Welcome Back</h2>
+      <p className="text-sm text-center text-gray-500 dark:text-gray-300">Please sign in to continue</p>
 
-    return<div className='h-screen w-screen bg-gray-200 flex justify-center items-center '>    
-        <div className='bg-white rounded-2xl border-gray-200 border min-w-48 p-8'>
-            <Input reference={usernameRef} placeholder='Nishul' type='text'/>
-            <Input reference={passwordRef} placeholder='123456' type='password'/>
+      <div className="space-y-4">
+        <Input reference={usernameRef} placeholder="Username" type="text" />
+        <Input reference={passwordRef} placeholder="Password" type="password" />
+        
+        {error && (
+          <div>
+            <p className="text-red-500 text-sm pl-2">{error}</p>
+          </div>
+        )}
+      </div>
 
-            {error && <div>
-                <p className='text-red-500 text-sm pl-2'>{error}</p>
-            </div>}
-            
-            <div className='justify-center pt-4'>
-                <Button onClick={signin} loading={false} text="Signin" variant='primary' size="md"  fullWidth={true}/>
-                </div>
-        </div>
+      <div className="pt-2">
+        <Button 
+          onClick={signin} 
+          loading={false} 
+          text="Sign In" 
+          variant="primary" 
+          size="md" 
+          fullWidth={true} 
+        />
+      </div>
     </div>
+  </div>
+)
 }
