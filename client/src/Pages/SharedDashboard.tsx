@@ -3,11 +3,13 @@ import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import { BACKRND_URL } from '../config';
 import { Card } from "../component/Card";
+import { NotesCard } from '../component/NotesCard';
 
 interface ContentItem {
-  type: "twitter" | "youtube";
+  type: "twitter" | "youtube" | "notes";
   link: string;
   title: string;
+  content?: string; 
 }
 
 export function SharedDashboard() {
@@ -44,20 +46,6 @@ export function SharedDashboard() {
     );
   }
 
-  if (state.error) {
-    return (
-      <div className="p-4 flex justify-center items-center min-h-screen bg-[#eeeeef]">
-        <div className="bg-white p-6 rounded shadow-md max-w-md text-center">
-          <h2 className="text-xl font-bold mb-2">Error</h2>
-          <p className="text-gray-700">{state.error}</p>
-          <button onClick={() => window.location.reload()} className="mt-4 bg-blue-500 text-white p-2 rounded">
-            Try Again
-          </button>
-        </div>
-      </div>
-    );
-  }
-
   if (state.contents.length === 0) {
     return (
       <div className="p-4 flex justify-center items-center min-h-screen bg-[#eeeeef]">
@@ -70,13 +58,30 @@ export function SharedDashboard() {
   }
 
   return (
-    <div className="p-4 min-h-screen bg-[#eeeeef]">
-      <h2 className="text-2xl font-bold mb-6">Shared Content</h2>
-      <div className="flex gap-4 flex-wrap">
-        {state.contents.map((content, index) => (
-          <Card key={index} type={content.type} link={content.link} title={content.title} />
-        ))}
-      </div>
-    </div>
+     <div className='flex gap-4 flex-wrap mt-8'>
+              {state.contents.map(({ type, link, title, content }, idx) => {
+                if (type === "notes") {
+                  return (
+                    <NotesCard
+                      key={link + type + idx}
+                      title={title}
+                      type={type}
+                      content={content ?? ""}
+                      link={link} 
+                    
+                    />
+                  );
+                } else {
+                  return (
+                    <Card
+                      key={link + type + idx}
+                      type={type}
+                      link={link}
+                      title={title}
+                    />
+                  );
+                }
+              })}
+             </div>
   );
 }

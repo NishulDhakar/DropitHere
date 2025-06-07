@@ -19,13 +19,14 @@ export const userModel = model("user" ,userSchema)
 
 
 const contentSchema = new Schema({
+  type: { type: String, required: true },
+  link: { type: String, required: true },
+  title: { type: String, required: true },
+  content: { type: String, default: "" }, 
+  tags: [{ type: mongoose.Schema.Types.ObjectId, ref: "Tag" }],
+  userId: { type: mongoose.Schema.Types.ObjectId, ref: "user", required: true },
+}, { timestamps: true });
 
-    type : String,
-    link : String,
-    title : String,
-    tags : [{ type : objectId , ref : 'Tag'}],
-    userId: {type : objectId , ref : 'user' , required : true}
-})
 
 
 const linkSchema = new Schema({
@@ -36,4 +37,4 @@ const linkSchema = new Schema({
 
 
 export const linkModel = model("link" , linkSchema);
-export const contentModel = model("content" , contentSchema);
+export const contentModel = model("contents" , contentSchema);

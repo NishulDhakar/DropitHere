@@ -8,16 +8,31 @@ import { SideBar } from '../component/Sidebar';
 import { useContent } from '../hooks/useContent';
 import axios from 'axios';
 import { BACKRND_URL } from '../config';
+import { NotesIcon } from '../icons/NotesIcon';
+import { CreateNotesModel } from '../component/CreateNotesModel';
+import { NotesCard } from '../component/NotesCard';
+
+interface ContentItem {
+  type: "twitter" | "youtube" | "notes";
+  link: string;
+  title: string;
+  content?: string; 
+}
 
 export function Dashboard() {
   const [copied, setCopied] = useState(false);
   const [modalOpen , setModalOpen] = useState(false)
-  const [filterType, setFilterType] = useState<"all" | "twitter" | "youtube">("all");
-  const { contents, refress } = useContent()
+  const [notesModel , setNotesModel] = useState(false)
+  const [filterType, setFilterType] = useState<"all" | "twitter" | "youtube" | "notes">("all");
+  const { contents, refress } = useContent() as { contents: ContentItem[], refress: () => void };
   
   useEffect(() => {
     refress();
   }, [modalOpen])
+
+  useEffect(() => {
+    refress();
+  },[notesModel])
 
   const handleDelete = async (link: string) => {
     try {
@@ -60,6 +75,7 @@ export function Dashboard() {
       </div>
       <div className='p-4'>
         <CreateContentModal open={modalOpen} onClose={() => setModalOpen(false)} />
+        <CreateNotesModel open={notesModel} onClose={() => setNotesModel(false)} />
 
 
         <div className='flex justify-end gap-4'>
@@ -92,20 +108,43 @@ export function Dashboard() {
                  startIcon={<PlusIcon size='lg'/>} 
                  size ="sm"  
                  variant='primary' 
-                 text = "Add Comment"/>
+                 text = "Add Links"/>
+
+                 <Button 
+                 onClick={() =>{
+                  setNotesModel(true)
+                 }}
+                 startIcon={<NotesIcon/>} 
+                 size ="sm"  
+                 variant='primary' 
+                 text = "Create Notes"/>
          </div>
          
          <div className='flex gap-4 flex-wrap mt-8'>
-
-          {filteredContents.map(({ type, link, title }, idx) => (
-            <Card
-              key={link + type + idx}
-              type={type}
-              link={link}
-              title={title}
-              onDelete={() => handleDelete(link)}
-            />
-          ))}
+          {filteredContents.map(({ type, link, title, content }, idx) => {
+            if (type === "notes") {
+              return (
+                <NotesCard
+                  key={link + type + idx}
+                  title={title}
+                  type={type}
+                  content={content ?? ""}
+                  link={link} 
+                  onDelete={() => handleDelete(link)}
+                />
+              );
+            } else {
+              return (
+                <Card
+                  key={link + type + idx}
+                  type={type}
+                  link={link}
+                  title={title}
+                  onDelete={() => handleDelete(link)}
+                />
+              );
+            }
+          })}
          </div>
          </div>
       </div>

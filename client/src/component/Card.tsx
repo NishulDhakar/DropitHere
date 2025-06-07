@@ -21,7 +21,9 @@ export function Card({title, link , type , onDelete} : CardProps) {
 
             <div className="flex items-center text-md">
                 <div className="text-gray-500  pr-2">
-                {type === "youtube" ? <YutubeIcon /> : <TwitterIcon />}
+                {type === "youtube" && <YutubeIcon /> }
+                {type === "twitter" && <TwitterIcon /> }
+                
                 </div>
                 {title}
             </div>
@@ -54,6 +56,7 @@ export function Card({title, link , type , onDelete} : CardProps) {
              <a href={link.replace("x.com", "twitter.com")}>
              </a>
              </blockquote> }
+    
           </div>
      </div>
 </div>
