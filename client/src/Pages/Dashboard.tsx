@@ -91,7 +91,7 @@ export function Dashboard() {
                   }
           });
 
-          const shareUrl = "dropithere.nishul.dev/share/" + response.data.hash;
+          const shareUrl = "Dropithere.nishul.dev/share/" + response.data.hash;
           await navigator.clipboard.writeText(shareUrl);
           setCopied(true)
           setTimeout(() => setCopied(false), 1000);

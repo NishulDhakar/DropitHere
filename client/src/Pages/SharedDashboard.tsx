@@ -1,15 +1,16 @@
-import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import axios from 'axios';
-import { BACKRND_URL } from '../config';
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import axios from "axios";
+import { BACKRND_URL } from "../config";
 import { Card } from "../component/Card";
-import { NotesCard } from '../component/NotesCard';
+import { NotesCard } from "../component/NotesCard";
+import { Footer } from "../component/Footer";
 
 interface ContentItem {
   type: "twitter" | "youtube" | "notes";
   link: string;
   title: string;
-  content?: string; 
+  content?: string;
 }
 
 export function SharedDashboard() {
@@ -21,19 +22,25 @@ export function SharedDashboard() {
   }>({
     contents: [],
     isLoading: true,
-    error: null
+    error: null,
   });
 
   useEffect(() => {
-    axios.get(`${BACKRND_URL}/api/v1/brain/${shareId}`)
-      .then(res => {
+    axios
+      .get(`${BACKRND_URL}/api/v1/brain/${shareId}`)
+      .then((res) => {
         const data = res.data.contents || res.data.content || [];
-        setState({ contents: Array.isArray(data) ? data : [], isLoading: false, error: null });
+        setState({
+          contents: Array.isArray(data) ? data : [],
+          isLoading: false,
+          error: null,
+        });
       })
-      .catch(err => {
-        const errorMsg = err.response?.data?.message || 
-                         err.response?.data?.massage || 
-                         'Failed to load content';
+      .catch((err) => {
+        const errorMsg =
+          err.response?.data?.message ||
+          err.response?.data?.massage ||
+          "Failed to load content";
         setState({ contents: [], isLoading: false, error: errorMsg });
       });
   }, [shareId]);
@@ -58,30 +65,32 @@ export function SharedDashboard() {
   }
 
   return (
-     <div className='flex gap-4 flex-wrap mt-8'>
-              {state.contents.map(({ type, link, title, content }, idx) => {
-                if (type === "notes") {
-                  return (
-                    <NotesCard
-                      key={link + type + idx}
-                      title={title}
-                      type={type}
-                      content={content ?? ""}
-                      link={link} 
-                    
-                    />
-                  );
-                } else {
-                  return (
-                    <Card
-                      key={link + type + idx}
-                      type={type}
-                      link={link}
-                      title={title}
-                    />
-                  );
-                }
-              })}
-             </div>
+      <div>
+    <div className="flex gap-4 flex-wrap mt-8">
+      {state.contents.map(({ type, link, title, content }, idx) => {
+        if (type === "notes") {
+          return (
+            <NotesCard
+              key={link + type + idx}
+              title={title}
+              type={type}
+              content={content ?? ""}
+              link={link}
+            />
+          );
+        } else {
+          return (
+            <Card
+              key={link + type + idx}
+              type={type}
+              link={link}
+              title={title}
+            />
+          );
+        }
+      })}
+      </div>
+        <Footer />
+    </div>
   );
 }
