@@ -27,14 +27,19 @@ const contentSchema = new Schema({
   userId: { type: mongoose.Schema.Types.ObjectId, ref: "user", required: true },
 }, { timestamps: true });
 
-
+const SharedSnapshot = new mongoose.Schema({
+  hash: String,
+  contents: Array,
+  createdAt: { type: Date, default: Date.now }
+});
 
 const linkSchema = new Schema({
 
   hash : String,
-  userId: {type : objectId , ref : 'user' , required : true , unique : true}
+  userId: {type : objectId , ref : 'user' , required : true }
 })
 
 
 export const linkModel = model("link" , linkSchema);
 export const contentModel = model("contents" , contentSchema);
+export const sharedSnapshotModel = model("SharedSnapshot", SharedSnapshot);

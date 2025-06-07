@@ -5,6 +5,7 @@ import axios from "axios";
 import { BACKRND_URL } from "../config";
 import { ResizeIcon } from "../icons/ResizeIcon";
 import { ResizeIconSmall } from "../icons/ResizeSmall";
+import { useNavigate } from "react-router-dom";
 
 interface CardProps {
   title: string;
@@ -18,7 +19,8 @@ export function NotesCard({ title, content, link, onDelete }: CardProps) {
   const [noteContent, setNoteContent] = useState(content || "");
   const [updating, setUpdating] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
-  
+  const navigate = useNavigate();
+
   const handleUpdate = async () => {
     setUpdating(true);
     try {
@@ -40,26 +42,33 @@ export function NotesCard({ title, content, link, onDelete }: CardProps) {
   };
 
   return (
-    <div className={`
-      bg-white dark:bg-zinc-800 
-      shadow-md hover:shadow-lg 
-      transition-all duration-200 
-      rounded-2xl p-4 
-      border border-gray-200 dark:border-zinc-700
-      w-full
-      ${isExpanded ? 'col-span-full max-w-none' : 'max-w-2xl'}
-      resize-container relative
-    `}>
-
+    <div
+      className={`
+        bg-white dark:bg-zinc-800 
+        shadow-md hover:shadow-lg 
+        transition-all duration-200 
+        rounded-2xl p-4 
+        border border-gray-200 dark:border-zinc-700
+        flex flex-col
+        w-full
+        ${isExpanded ? 'col-span-full max-w-3xl' : ''}
+      `}
+      style={{
+        minWidth: 220,
+        minHeight: 180,
+        maxWidth: isExpanded ? 900 : "100%",
+        maxHeight: isExpanded ? 900 : 400,
+        transition: "max-width 0.3s, max-height 0.3s"
+      }}
+    >
       <div className="flex items-start justify-between mb-3 sticky top-0 bg-inherit z-10 pb-2">
         <div className="flex items-center gap-2 text-lg font-semibold text-gray-800 dark:text-gray-200 flex-1 min-w-0">
-          <NotesIcon/>
+          <NotesIcon />
           <span className="truncate" title={title}>
             {title}
           </span>
         </div>
         <div className="flex items-center gap-2 ml-2">
-
           <button
             onClick={() => setIsExpanded(!isExpanded)}
             className="text-gray-400 hover:text-blue-500 transition-colors p-1 rounded"
@@ -67,9 +76,18 @@ export function NotesCard({ title, content, link, onDelete }: CardProps) {
           >
             {isExpanded ? <ResizeIcon /> : <ResizeIconSmall />}
           </button>
-          
-          <button 
-            onClick={onDelete} 
+          <button
+            onClick={() => navigate(`/notes/${encodeURIComponent(title)}`)}
+            className="text-gray-400 hover:text-green-500 transition-colors p-1 rounded"
+            title="Open in new page"
+          >
+            <svg width="20" height="20" fill="none" viewBox="0 0 20 20">
+              <path stroke="currentColor" strokeWidth="1.5" d="M7 13l6-6M11 7h2a2 2 0 012 2v6a2 2 0 01-2 2H7a2 2 0 01-2-2v-2"/>
+              <path stroke="currentColor" strokeWidth="1.5" d="M13 7V5a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2"/>
+            </svg>
+          </button>
+          <button
+            onClick={onDelete}
             className="text-gray-400 hover:text-red-500 transition-colors p-1 rounded"
             title="Delete note"
           >
@@ -77,9 +95,7 @@ export function NotesCard({ title, content, link, onDelete }: CardProps) {
           </button>
         </div>
       </div>
-
-
-      <div className="space-y-4">
+      <div className="flex flex-col justify-between h-[calc(100%-40px)] flex-1">
         <textarea
           className={`
             w-full p-3 rounded-lg 
@@ -87,23 +103,22 @@ export function NotesCard({ title, content, link, onDelete }: CardProps) {
             border border-gray-300 dark:border-zinc-700 
             text-sm text-gray-800 dark:text-white 
             placeholder-gray-400 
-            resize-y overflow-auto
+            resize-none overflow-auto
             transition-all duration-200
             focus:ring-2 focus:ring-[#7164c0] focus:border-transparent
-            ${isExpanded ? 'min-h-[400px] max-h-[80vh]' : 'min-h-[120px] max-h-[600px]'}
+            flex-1 min-h-0
           `}
           placeholder="Write your markdown notes here..."
           value={noteContent}
           onChange={handleTextareaChange}
-          style={{ 
-            resize: "vertical",
-            minHeight: isExpanded ? '400px' : '120px',
-            maxHeight: isExpanded ? '80vh' : '600px'
+          style={{
+            minHeight: isExpanded ? '320px' : '80px',
+            maxHeight: isExpanded ? '400px' : '120px',
+            fontSize: isExpanded ? '1.1rem' : '1rem',
+            transition: "min-height 0.3s, max-height 0.3s, font-size 0.3s"
           }}
         />
-
-
-        <div className="flex items-center justify-between pt-2 border-t border-gray-200 dark:border-zinc-700">
+        <div className="flex items-center justify-between pt-2 border-t border-gray-200 dark:border-zinc-700 mt-2">
           <div className="text-xs text-gray-500 dark:text-gray-400">
             {noteContent.length} characters • {noteContent.split('\n').length} lines
           </div>
@@ -124,13 +139,6 @@ export function NotesCard({ title, content, link, onDelete }: CardProps) {
             {updating ? "Updating..." : noteContent === content ? "No changes" : "Update Note"}
           </button>
         </div>
-      </div>
-      
-
-      <div className="absolute bottom-2 right-2 w-3 h-3 opacity-30 pointer-events-none">
-        <svg viewBox="0 0 24 24" fill="currentColor" className="w-full h-full text-gray-400">
-          <path d="M22 22H20V20H22V22ZM22 18H20V16H22V18ZM18 22H16V20H18V22ZM18 18H16V16H18V18ZM14 22H12V20H14V22Z"/>
-        </svg>
       </div>
     </div>
   );

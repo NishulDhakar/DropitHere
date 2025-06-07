@@ -22,7 +22,7 @@ export function SignUp(){
       });
       alert("You have signed up");
       navigate("/signin");
-    } catch (error) {
+    } catch {
       setError("User already exists");
     }
   }

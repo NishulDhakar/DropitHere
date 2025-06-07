@@ -1,11 +1,12 @@
 import express from "express"
 import jwt from "jsonwebtoken"
-import {contentModel, linkModel, userModel} from "./db"
+import {contentModel, linkModel, userModel, sharedSnapshotModel} from "./db"
 import {JWT_PASSWORD } from "./config"
 import { userMiddleware } from "./middleware"
 import { random } from "./utils"
 import cors from "cors"
 import 'dotenv/config';
+import { v4 as uuidv4 } from "uuid"; 
 
 const app = express();
 app.use(express.json());
@@ -141,45 +142,6 @@ app.delete("/api/v1/content", userMiddleware, async (req, res) => {
     res.json({ message: "Content deleted" });
 })
 
-app.post("/api/v1/brain/share" ,userMiddleware, async(req, res) => {
-
-    const share = req.body.share;
-    if(share){
-        const existingLink = await linkModel.findOne({
-            //@ts-ignore
-            userId : req.userId,
-        })
-
-        if(existingLink){
-
-            res.json({
-                hash : existingLink.hash
-            })
-            return;
-        }
-
-        const hash = random(10)
-        await linkModel.create({
-           //@ts-ignore
-            userId : req.userId,
-            hash : hash
-        })
-
-        res.json({
-            hash
-        })
-
-    }else{
-        await linkModel.deleteOne({
-            //@ts-ignore
-            userId : req.userId
-        })
-
-        res.json({
-            massage : "removed link"
-        })
-    }
-})
 
 app.get("/api/v1/brain/:shareLink" , async(req, res) => {
 
@@ -220,6 +182,52 @@ app.get("/api/v1/brain/:shareLink" , async(req, res) => {
     })
 })
 
+
+app.post("/api/v1/brain/share", userMiddleware, async (req, res) => {
+    //@ts-ignore
+    const userId = req.userId;
+    const contents = await contentModel.find({ userId });
+    const hash = uuidv4();
+    await sharedSnapshotModel.create({
+        hash,
+        contents,
+        createdAt: new Date()
+    });
+    res.json({ hash });
+});
+
+app.get("/api/v1/brain/snapshot/:hash", async (req, res) => {
+    const { hash } = req.params;
+    const snapshot = await sharedSnapshotModel.findOne({ hash });
+    if (!snapshot) {
+        res.status(404).json({ message: "Snapshot not found" });
+        return;
+    }
+    res.json({ contents: snapshot.contents });
+});
+
+app.get("/api/v1/content/note/:title", userMiddleware, async (req, res) => {
+    //@ts-ignore
+    const userId = req.userId;
+    const title = req.params.title;
+    const note = await contentModel.findOne({
+        title: decodeURIComponent(title),
+        userId: userId,
+        type: "notes"
+    });
+
+    if (!note) {
+        res.status(404).json({ message: "Note not found" });
+        return;
+    }
+
+    res.json({
+        title: note.title,
+        content: note.content,
+        link: note.link,
+        type: note.type
+    });
+});
 
 app.listen(3001 , () => {
     console.log("Server is running on port 3001")
