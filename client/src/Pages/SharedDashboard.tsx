@@ -62,7 +62,7 @@ export function SharedDashboard() {
             </div>
             <div className="space-y-3">
               <h3 className="text-2xl font-bold bg-gradient-to-r from-slate-700 to-slate-500 bg-clip-text text-transparent">
-                Loading Knowledge Hub
+                Loading Dropithere content...
               </h3>
               <div className="flex items-center justify-center space-x-1">
                 <div className="w-2 h-2 bg-blue-500 rounded-full animate-bounce"></div>
