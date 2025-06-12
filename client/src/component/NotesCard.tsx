@@ -5,7 +5,7 @@ import axios from "axios";
 import { BACKRND_URL } from "../config";
 import { ResizeIcon } from "../icons/ResizeIcon";
 import { ResizeIconSmall } from "../icons/ResizeSmall";
-import { useNavigate } from "react-router-dom";
+import { CopyIcon } from "../icons/CopyIcon";
 
 interface CardProps {
   title: string;
@@ -19,7 +19,7 @@ export function NotesCard({ title, content, link, onDelete }: CardProps) {
   const [noteContent, setNoteContent] = useState(content || "");
   const [updating, setUpdating] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
-  const navigate = useNavigate();
+  const [copied, setCopied] = useState(false);
 
   const handleUpdate = async () => {
     setUpdating(true);
@@ -30,15 +30,20 @@ export function NotesCard({ title, content, link, onDelete }: CardProps) {
         { link, content: noteContent },
         { headers: { Authorization: token } }
       );
-      alert("Note updated!");
     } catch {
       alert("Failed to update note");
     }
-    setUpdating(false);
+    setTimeout(() => setUpdating(false), 2000);
   };
 
   const handleTextareaChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setNoteContent(e.target.value);
+  };
+
+  const handleCopy = async () => {
+    await navigator.clipboard.writeText(noteContent);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 1000);
   };
 
   return (
@@ -56,7 +61,7 @@ export function NotesCard({ title, content, link, onDelete }: CardProps) {
       style={{
         minWidth: 220,
         minHeight: 180,
-        maxWidth: isExpanded ? 900 : "100%",
+        maxWidth: isExpanded ? 900 : 400,
         maxHeight: isExpanded ? 900 : 400,
         transition: "max-width 0.3s, max-height 0.3s"
       }}
@@ -77,14 +82,11 @@ export function NotesCard({ title, content, link, onDelete }: CardProps) {
             {isExpanded ? <ResizeIcon /> : <ResizeIconSmall />}
           </button>
           <button
-            onClick={() => navigate(`/notes/${encodeURIComponent(title)}`)}
-            className="text-gray-400 hover:text-green-500 transition-colors p-1 rounded"
-            title="Open in new page"
+            onClick={handleCopy}
+            className="text-gray-400 hover:text-blue-500 transition-colors p-1 rounded"
+            title="Copy note content"
           >
-            <svg width="20" height="20" fill="none" viewBox="0 0 20 20">
-              <path stroke="currentColor" strokeWidth="1.5" d="M7 13l6-6M11 7h2a2 2 0 012 2v6a2 2 0 01-2 2H7a2 2 0 01-2-2v-2"/>
-              <path stroke="currentColor" strokeWidth="1.5" d="M13 7V5a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2"/>
-            </svg>
+            <CopyIcon />
           </button>
           <button
             onClick={onDelete}
@@ -140,6 +142,16 @@ export function NotesCard({ title, content, link, onDelete }: CardProps) {
           </button>
         </div>
       </div>
+      {copied && (
+        <div className="fixed bottom-8 right-8 bg-green-600 text-white px-6 py-1 rounded-full shadow-lg animate-pulse z-50">
+          ✓ copied to clipboard!
+        </div>
+      )}
+      {updating && (
+        <div className="fixed bottom-8 right-8 bg-green-600 text-white px-6 py-1 rounded-full shadow-lg">
+          ✓ Updated!
+        </div>
+      )}
     </div>
   );
 }

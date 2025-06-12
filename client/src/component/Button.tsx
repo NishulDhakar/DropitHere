@@ -1,14 +1,14 @@
 import React from 'react';
 
-interface ButtonProps {
-    text: string,
-    variant: "primary" | "secondary",
-    size: "sm" | "md" | "lg",
-    onClick?: () => void,
-    startIcon?: React.ReactNode,
-    endIcon?: React.ReactNode,
-    fullWidth?: boolean,
-    loading?: boolean
+export interface ButtonProps {
+  onClick: () => void;
+  startIcon?: React.ReactNode;
+  size?: "sm" | "md" | "lg";
+  variant?: "primary" | "secondary";
+  text: string;
+  loading?: boolean;
+  fullWidth?: boolean;
+  disabled?: boolean;
 }
 
 const variantStyles = {
@@ -48,39 +48,47 @@ const defaultStyles = `
     transition-all duration-200
 `;
 
-export const Button = (props: ButtonProps) => {
-    const spinnerColor = props.variant === "primary" ? "text-white" : "text-[#7164c0]";
-    return (
-        <button
-            onClick={props.onClick}
-            className={`
-                ${variantStyles[props.variant]}
-                ${sizeStyles[props.size]}
-                ${defaultStyles}
-                ${props.fullWidth ? "w-full justify-center" : ""}
-                ${props.loading ? "pointer-events-none" : ""}
-                relative overflow-hidden
-            `}
-            disabled={props.loading}
-        >
-            <span className="absolute inset-0 rounded-2xl pointer-events-none z-0" aria-hidden
-                style={{
-                    boxShadow: props.variant === "primary"
-                        ? "0 0 0 2px #a5b4fc, 0 4px 24px 0 #7164c033"
-                        : "0 0 0 2px #e0e7ff"
-                }}
-            />
-            <span className="relative z-10 flex items-center">
-                {props.loading && (
-                    <svg className={`animate-spin h-5 w-5 mr-2 ${spinnerColor}`} viewBox="0 0 24 24">
-                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none"/>
-                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"/>
-                    </svg>
-                )}
-                {props.startIcon && <span className="mr-2 flex items-center">{props.startIcon}</span>}
-                <span>{props.text}</span>
-                {props.endIcon && <span className="ml-2 flex items-center">{props.endIcon}</span>}
-            </span>
-        </button>
-    );
-};
+export function Button({
+  onClick,
+  startIcon,
+  size = "md",
+  variant = "primary",
+  text,
+  loading = false,
+  fullWidth = false,
+  disabled = false,
+}: ButtonProps) {
+  const spinnerColor = variant === "primary" ? "text-white" : "text-[#7164c0]";
+  return (
+    <button
+      onClick={onClick}
+      disabled={disabled || loading}
+      className={`
+        ${variantStyles[variant]}
+        ${sizeStyles[size]}
+        ${defaultStyles}
+        ${fullWidth ? "w-full justify-center" : ""}
+        ${loading ? "pointer-events-none" : ""}
+        relative overflow-hidden
+      `}
+    >
+      <span className="absolute inset-0 rounded-2xl pointer-events-none z-0" aria-hidden
+        style={{
+          boxShadow: variant === "primary"
+            ? "0 0 0 2px #a5b4fc, 0 4px 24px 0 #7164c033"
+            : "0 0 0 2px #e0e7ff"
+        }}
+      />
+      <span className="relative z-10 flex items-center">
+        {loading && (
+          <svg className={`animate-spin h-5 w-5 mr-2 ${spinnerColor}`} viewBox="0 0 24 24">
+            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none"/>
+            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"/>
+          </svg>
+        )}
+        {startIcon && <span className="mr-2 flex items-center">{startIcon}</span>}
+        <span>{text}</span>
+      </span>
+    </button>
+  );
+}

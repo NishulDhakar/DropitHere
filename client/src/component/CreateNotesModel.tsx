@@ -22,7 +22,7 @@ export function CreateNotesModel({ open, onClose }) {
 
     await axios.post(
       `${BACKRND_URL}/api/v1/content`,
-      { link, type, title },
+      { link , type, title },
       { headers: { Authorization: localStorage.getItem("token") } }
     );
 
@@ -48,7 +48,9 @@ export function CreateNotesModel({ open, onClose }) {
                 Add New Content
               </h2>
               <Input reference={titleRef} placeholder="Enter title" />
-              <Input reference={linkRef} placeholder="Enter content link" />
+              <div className="hidden">
+               <Input reference={linkRef} placeholder="Enter content link"/>
+              </div>  
             </div>
 
             <div className="pt-2 flex justify-center">
