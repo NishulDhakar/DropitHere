@@ -27,7 +27,7 @@ export function SignUp() {
         password,
       });
       localStorage.setItem("token", loginRes.data.token);
-      navigate("/dashboard");
+      navigate("/signin");
     } catch (err: unknown) {
       if (axios.isAxiosError(err) && err.response?.data?.message) {
         setError(err.response.data.message);
