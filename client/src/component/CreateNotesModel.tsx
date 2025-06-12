@@ -8,7 +8,6 @@ import { BACKRND_URL } from "../config";
 enum contentType {
   Notes = "notes",
 }
-
 export function CreateNotesModel({ open, onClose }) {
   const titleRef = useRef<HTMLInputElement>(null);
   const linkRef = useRef<HTMLInputElement>(null);
@@ -22,13 +21,12 @@ export function CreateNotesModel({ open, onClose }) {
 
     await axios.post(
       `${BACKRND_URL}/api/v1/content`,
-      { link , type, title },
+      { link, type, title },
       { headers: { Authorization: localStorage.getItem("token") } }
     );
 
     onClose();
   }
-
   return (
     <>
       {open && (
@@ -48,9 +46,10 @@ export function CreateNotesModel({ open, onClose }) {
                 Add New Content
               </h2>
               <Input reference={titleRef} placeholder="Enter title" />
-              <div className="hidden">
-               <Input reference={linkRef} placeholder="Enter content link"/>
-              </div>  
+            <div className="hidden">
+              <Input reference={linkRef} placeholder="Enter content link" />
+            </div>
+              
             </div>
 
             <div className="pt-2 flex justify-center">

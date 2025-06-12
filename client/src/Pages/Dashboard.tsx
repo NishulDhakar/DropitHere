@@ -4,7 +4,7 @@ import { useContent } from "../hooks/useContent";
 import { BACKRND_URL } from "../config";
 import { useNavigate } from "react-router-dom";
 import { DashboardHeader } from "../component/DashboardHeader";
-import { DashboardContentGrid } from "../component/DashboardContentGrid";
+import { DashboardContentGrid } from "../component/DeshboardContentGrid"; 
 import { SignupPromptModal } from "../component/SignupPromptModal";
 import { CreateContentModal } from "../component/CreateContentModal";
 import { CreateNotesModel } from "../component/CreateNotesModel";
@@ -123,7 +123,7 @@ export function Dashboard() {
               );
               if (!response.ok) throw new Error("Failed to share");
               const data = await response.json();
-              const shareUrl = "dropithere/share/" + data.hash;
+              const shareUrl = "https://dropithere.nishul.dev/share/" + data.hash;
               await navigator.clipboard.writeText(shareUrl);
               setCopied(true);
               setTimeout(() => setCopied(false), 2000);

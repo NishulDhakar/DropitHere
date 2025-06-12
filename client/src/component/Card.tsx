@@ -16,7 +16,7 @@ interface CardProps {
 export function Card({title, link , type , onDelete} : CardProps) {
 
     return <div>
-        <div className="text-black bg-white min-w-72 min-h-48 p-4 rounded-md border-gray-200 border shadow-md hover:shadow-lg transition-all duration-200 dark:bg-zinc-800 dark:border-zinc-700 dark:text-white">
+        <div className="text-black bg-white min-w-72 min-h-48 p-4 rounded-md border-gray-200 border">
            <div className="flex justify-between pb-4">
 
             <div className="flex items-center text-md">

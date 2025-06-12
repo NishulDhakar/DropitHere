@@ -46,31 +46,8 @@ export function SharedDashboard() {
 
   if (state.isLoading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-100/50 flex items-center justify-center relative overflow-hidden">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_40%,_rgba(120,119,198,0.1),_transparent_70%)] pointer-events-none"></div>
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_80%,_rgba(59,130,246,0.1),_transparent_70%)] pointer-events-none"></div>
-        <div className="absolute top-20 left-20 w-2 h-2 bg-blue-400 rounded-full animate-ping opacity-75"></div>
-        <div className="absolute top-40 right-32 w-1 h-1 bg-purple-400 rounded-full animate-pulse"></div>
-        <div className="absolute bottom-32 left-16 w-3 h-3 bg-indigo-300 rounded-full animate-bounce opacity-60"></div>
-        <div className="relative z-10 text-center">
-          <div className="relative">
-            <div className="w-16 h-16 relative mx-auto mb-6">
-              <div className="absolute inset-0 rounded-full border-4 border-gradient-to-r from-blue-400 to-purple-500 animate-spin border-t-transparent"></div>
-              <div className="absolute inset-2 rounded-full border-2 border-gradient-to-r from-purple-400 to-pink-400 animate-spin animate-reverse border-b-transparent"></div>
-              <div className="absolute inset-4 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 animate-pulse"></div>
-            </div>
-            <div className="space-y-3">
-              <h3 className="text-2xl font-bold bg-gradient-to-r from-slate-700 to-slate-500 bg-clip-text text-transparent">
-                Loading Knowledge Hub
-              </h3>
-              <div className="flex items-center justify-center space-x-1">
-                <div className="w-2 h-2 bg-blue-500 rounded-full animate-bounce"></div>
-                <div className="w-2 h-2 bg-purple-500 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
-                <div className="w-2 h-2 bg-indigo-500 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
-              </div>
-            </div>
-          </div>
-        </div>
+      <div className="min-h-screen flex items-center justify-center">
+        <span className="text-lg text-gray-500">Loading shared dashboard...</span>
       </div>
     );
   }

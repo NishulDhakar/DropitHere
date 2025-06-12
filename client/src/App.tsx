@@ -12,8 +12,8 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path='/signin' element={<Signin />} />
-        <Route path='/' element={<SignUp />} />
         <Route path='/signup' element={<SignUp />} />
+        <Route path='/' element={<SignUp />} />
         <Route path='/Dashboard' element={<Dashboard />} />
         <Route path='/share/:shareId' element={<SharedDashboard />} />
       </Routes>

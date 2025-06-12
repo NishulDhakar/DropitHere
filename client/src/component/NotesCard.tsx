@@ -19,31 +19,29 @@ export function NotesCard({ title, content, link, onDelete }: CardProps) {
   const [noteContent, setNoteContent] = useState(content || "");
   const [updating, setUpdating] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
-  const [copied, setCopied] = useState(false);
+  const [showCopied, setShowCopied] = useState(false);
+
+  const handleCopy = () => {
+    navigator.clipboard.writeText(noteContent);
+    setShowCopied(true);
+    setTimeout(() => setShowCopied(false), 2000);
+  };
 
   const handleUpdate = async () => {
     setUpdating(true);
-    try {
       const token = localStorage.getItem("token");
       await axios.put(
         `${BACKRND_URL}/api/v1/content`,
         { link, content: noteContent },
         { headers: { Authorization: token } }
       );
-    } catch {
-      alert("Failed to update note");
-    }
-    setTimeout(() => setUpdating(false), 2000);
+
+    setUpdating(false);
+    setTimeout(() => setUpdating(false), 1000);
   };
 
   const handleTextareaChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setNoteContent(e.target.value);
-  };
-
-  const handleCopy = async () => {
-    await navigator.clipboard.writeText(noteContent);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 1000);
   };
 
   return (
@@ -61,7 +59,7 @@ export function NotesCard({ title, content, link, onDelete }: CardProps) {
       style={{
         minWidth: 220,
         minHeight: 180,
-        maxWidth: isExpanded ? 900 : 400,
+        maxWidth: isExpanded ? 900 : "100%",
         maxHeight: isExpanded ? 900 : 400,
         transition: "max-width 0.3s, max-height 0.3s"
       }}
@@ -81,13 +79,16 @@ export function NotesCard({ title, content, link, onDelete }: CardProps) {
           >
             {isExpanded ? <ResizeIcon /> : <ResizeIconSmall />}
           </button>
-          <button
+
+         <button 
             onClick={handleCopy}
             className="text-gray-400 hover:text-blue-500 transition-colors p-1 rounded"
             title="Copy note content"
-          >
+         >
             <CopyIcon />
           </button>
+
+
           <button
             onClick={onDelete}
             className="text-gray-400 hover:text-red-500 transition-colors p-1 rounded"
@@ -142,14 +143,15 @@ export function NotesCard({ title, content, link, onDelete }: CardProps) {
           </button>
         </div>
       </div>
-      {copied && (
-        <div className="fixed bottom-8 right-8 bg-green-600 text-white px-6 py-1 rounded-full shadow-lg animate-pulse z-50">
-          ✓ copied to clipboard!
+      {showCopied && (
+        <div className="absolute top-2 right-2 bg-green-500 text-white text-xs px-2 py-1 rounded z-50">
+          Copied to clipboard!
         </div>
       )}
-      {updating && (
-        <div className="fixed bottom-8 right-8 bg-green-600 text-white px-6 py-1 rounded-full shadow-lg">
-          ✓ Updated!
+
+      { updating && (
+        <div className="absolute inset-0 bg-gray-200 dark:bg-zinc-800 bg-opacity-50 flex items-center justify-center z-50">
+          <div className="text-gray-700 dark:text-gray-300">Updating...</div>
         </div>
       )}
     </div>
