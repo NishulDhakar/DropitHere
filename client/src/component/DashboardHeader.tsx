@@ -57,7 +57,7 @@ export function DashboardHeader({
             />
             <button
               onClick={onLogout}
-              className="px-4 py-2 rounded-lg bg-red-500 text-white font-semibold hover:bg-red-600 transition"
+              className="px-4 py-2 rounded-lg border border-red-200 bg-white text-red-500 font-semibold hover:bg-red-50 hover:text-red-600 transition shadow-sm"
             >
               Logout
             </button>

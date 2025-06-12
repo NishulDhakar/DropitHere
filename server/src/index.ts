@@ -78,33 +78,29 @@ app.post("/api/v1/signin", async (req, res) => {
 });
 
 app.post("/api/v1/content" ,userMiddleware, async (req, res) => {
+    const { link, type, title, content = "" } = req.body;
 
-    const link = req.body.link;
-    const type = req.body.type;
-    const title = req.body.title;
-    const content = req.body.content || ""; 
-    
-    try{
+    if (!title || title.trim() === "") {
+        res.status(400).json({ message: "Title is required" });
+        return;
+    }
+
+    try {
         await contentModel.create({
-        link,
-        type,
-        title,
-        content,
+            link,
+            type,
+            title,
+            content,
+            //@ts-ignore
+            userId: req.userId,
+            tags: []
+        });
 
-        //@ts-ignore
-        userId : req.userId,
-        tags : []
-
-    })
-
-     res.json({
-        massage : "content added"
-    })
-  } catch(e){
+        res.json({ message: "content added" });
+    } catch (e) {
         console.error("Error creating content:", e);
         res.status(500).json({ message: "Something went wrong" });
-  }
-
+    }
 })
 
 app.get("/api/v1/content" , userMiddleware, async (req, res) => {
@@ -121,26 +117,21 @@ app.get("/api/v1/content" , userMiddleware, async (req, res) => {
 
 app.put("/api/v1/content", userMiddleware, async (req, res) => {
   const { link, content } = req.body;
-
   try {
     //@ts-ignore
     const userId = req.userId;
-
-    const note = await contentModel.findOneAndUpdate(
-      { link, userId }, 
+    const updated = await contentModel.findOneAndUpdate(
+      { link, userId },
       { content },
       { new: true }
     );
-
-    if (!note) {
+    if (!updated) {
       res.status(404).json({ message: "Note not found" });
-      return; 
     }
-
-    res.json({ message: "Note updated", note });
+    res.json({ message: "Note updated", note: updated });
   } catch (e) {
     console.error("Error updating content:", e);
-    res.status(500).json({ message: "Failed to update note" });
+    res.status(500).json({ message: "Something went wrong" });
   }
 });
 
@@ -173,7 +164,6 @@ app.get("/api/v1/brain/:shareLink" , async(req, res) => {
         })
         return;
     }
-    //userId
     const contents = await contentModel.find({
         //@ts-ignore
         userId : link.userId

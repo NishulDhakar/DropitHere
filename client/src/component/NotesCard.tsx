@@ -13,9 +13,11 @@ interface CardProps {
   link: string;
   type?: "notes";
   onDelete?: () => void;
+  onUpdated?: () => void;
 }
 
-export function NotesCard({ title, content, link, onDelete }: CardProps) {
+export function NotesCard({ title, content, link, onDelete, onUpdated }: CardProps) {
+  const [lastSavedContent] = useState(content || "");
   const [noteContent, setNoteContent] = useState(content || "");
   const [updating, setUpdating] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
@@ -29,15 +31,18 @@ export function NotesCard({ title, content, link, onDelete }: CardProps) {
 
   const handleUpdate = async () => {
     setUpdating(true);
+    try {
       const token = localStorage.getItem("token");
       await axios.put(
         `${BACKRND_URL}/api/v1/content`,
         { link, content: noteContent },
         { headers: { Authorization: token } }
       );
-
+      if (typeof onUpdated === "function") onUpdated(); 
+    } catch {
+      alert("Failed to update note");
+    }
     setUpdating(false);
-    setTimeout(() => setUpdating(false), 1000);
   };
 
   const handleTextareaChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -127,19 +132,19 @@ export function NotesCard({ title, content, link, onDelete }: CardProps) {
           </div>
           <button
             onClick={handleUpdate}
-            disabled={updating || noteContent === content}
+            disabled={updating || noteContent === lastSavedContent}
             className={`
               px-4 py-2 text-sm font-semibold rounded-lg
               transition-all duration-150 
               focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#7164c0]
               border shadow-sm
-              ${updating || noteContent === content
+              ${updating || noteContent === lastSavedContent
                 ? 'bg-gray-300 dark:bg-zinc-600 text-gray-500 dark:text-gray-400 cursor-not-allowed border-gray-300 dark:border-zinc-600'
                 : 'bg-[#7164c0] dark:bg-blue-500 text-white hover:opacity-90 border-[#7164c0] dark:border-blue-500'
               }
             `}
           >
-            {updating ? "Updating..." : noteContent === content ? "No changes" : "Update Note"}
+            {updating ? "Updating..." : noteContent === lastSavedContent ? "No changes" : "Update Note"}
           </button>
         </div>
       </div>
@@ -150,7 +155,7 @@ export function NotesCard({ title, content, link, onDelete }: CardProps) {
       )}
 
       { updating && (
-        <div className="absolute inset-0 bg-gray-200 dark:bg-zinc-800 bg-opacity-50 flex items-center justify-center z-50">
+        <div className="absolute top-2 right-2 bg-green-500 text-white text-xs px-2 py-1 rounded z-50">
           <div className="text-gray-700 dark:text-gray-300">Updating...</div>
         </div>
       )}

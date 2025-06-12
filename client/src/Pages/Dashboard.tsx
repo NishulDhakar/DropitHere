@@ -41,7 +41,7 @@ export function Dashboard() {
   function handleLogout() {
     localStorage.removeItem("token");
     localStorage.removeItem("guest");
-    navigate("/signin");
+    navigate("/signup");
   }
 
   const handleDelete = async (link: string) => {
