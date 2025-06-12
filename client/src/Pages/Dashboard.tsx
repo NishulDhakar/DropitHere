@@ -123,7 +123,7 @@ export function Dashboard() {
               );
               if (!response.ok) throw new Error("Failed to share");
               const data = await response.json();
-              const shareUrl = "http://localhost:5173/share/" + data.hash;
+              const shareUrl = "https://dropithere.nishul.dev/share/" + data.hash;
               await navigator.clipboard.writeText(shareUrl);
               setCopied(true);
               setTimeout(() => setCopied(false), 2000);
