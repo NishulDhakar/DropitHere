@@ -64,7 +64,7 @@ export function CreateNotesModel({ open, onClose }) {
               </div>
               {showSolveMsg && (
                 <div className="text-center text-red-500 font-semibold text-sm mt-2">
-                  Solve it cuite :D
+                  Solve it legend 🫡
                 </div>
               )}
             </div>
