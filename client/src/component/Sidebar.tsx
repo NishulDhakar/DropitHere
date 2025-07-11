@@ -22,7 +22,7 @@ export function SideBar({
         fixed left-0 top-0 z-40 flex-col
         transition-all duration-500
         ${collapsed ? "w-20" : "w-72"}
-        bg-white/60 dark:bg-zinc-900/70 border-r border-slate-200/60 dark:border-zinc-700/60
+        bg-white/60  border-r border-slate-200/60 
         backdrop-blur-2xl shadow-2xl
         overflow-hidden
       `}
@@ -82,13 +82,13 @@ export function SideBar({
 
         <div className={`absolute bottom-8 left-0 right-0 px-4 ${collapsed ? "flex justify-center" : ""}`}>
           <div className={`
-            bg-white/80 dark:bg-zinc-900/80 backdrop-blur-xl rounded-2xl p-4 border border-slate-200/50 dark:border-zinc-700/50 shadow-xl
+            bg-white/80 backdrop-blur-xl rounded-2xl p-4 border border-slate-200/50 shadow-xl
             flex flex-col items-center
             transition-all duration-300
             ${collapsed ? "w-14 p-2" : ""}
           `}>
             {!collapsed && (
-              <h3 className='text-lg font-semibold text-slate-800 dark:text-white mb-3 flex items-center'>
+              <h3 className='text-lg font-semibold text-slate-800 mb-3 flex items-center'>
                 <span className="w-2 h-2 bg-gradient-to-r from-purple-500 to-blue-500 rounded-full mr-3 animate-pulse"></span>
                 Connect Here
               </h3>
@@ -139,8 +139,8 @@ function SidebarSocialIcon({ href, label, icon, gradient }: { href: string, labe
       rel="noopener noreferrer"
       aria-label={label}
       className={`
-        group relative p-3 rounded-xl bg-white/80 dark:bg-zinc-900/80 backdrop-blur-md
-        text-slate-600 dark:text-slate-200 hover:text-blue-500 transition-all duration-300
+        group relative p-3 rounded-xl bg-white/80  backdrop-blur-md
+        text-slate-600  hover:text-blue-500 transition-all duration-300
         hover:scale-110 hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:ring-offset-2
         overflow-hidden
       `}
